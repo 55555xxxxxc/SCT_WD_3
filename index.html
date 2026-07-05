@@ -1,26 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz Game</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tic Tac Toe</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
+
 <body>
 
-<div class="quiz-box">
-    <h1>Quiz Game</h1>
+<div class="background"></div>
 
-    <h2 id="question"></h2>
+<div class="container">
 
-    <div id="answers"></div>
+    <h1>🎮 Tic Tac Toe</h1>
 
-    <button id="next">Next</button>
+    <h3 id="status">Player X's Turn</h3>
 
-    <h3 id="result"></h3>
+    <div class="scoreboard">
+
+        <div class="score">
+            X : <span id="xScore">0</span>
+        </div>
+
+        <div class="score">
+            O : <span id="oScore">0</span>
+        </div>
+
+    </div>
+
+    <div class="board">
+
+        <button class="cell" data-index="0"></button>
+
+        <button class="cell" data-index="1"></button>
+
+        <button class="cell" data-index="2"></button>
+
+        <button class="cell" data-index="3"></button>
+
+        <button class="cell" data-index="4"></button>
+
+        <button class="cell" data-index="5"></button>
+
+        <button class="cell" data-index="6"></button>
+
+        <button class="cell" data-index="7"></button>
+
+        <button class="cell" data-index="8"></button>
+
+    </div>
+
+    <button id="restartBtn">
+
+        Restart Game
+
+    </button>
+
 </div>
+
+<footer>
+
+    Developed by Ashlesha ❤️
+
+</footer>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>

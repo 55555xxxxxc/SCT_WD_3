@@ -1,83 +1,118 @@
-const quiz = [
-{
-question:"Which language is used for web page structure?",
-options:["HTML","CSS","Python","Java"],
-answer:"HTML"
-},
-{
-question:"Which language is used for styling?",
-options:["C","CSS","Java","PHP"],
-answer:"CSS"
-},
-{
-question:"Which language adds interactivity?",
-options:["HTML","JavaScript","SQL","C++"],
-answer:"JavaScript"
-}
+const cells = document.querySelectorAll(".cell");
+const statusText = document.getElementById("status");
+const restartBtn = document.getElementById("restartBtn");
+
+const xScoreText = document.getElementById("xScore");
+const oScoreText = document.getElementById("oScore");
+
+let board = ["", "", "", "", "", "", "", "", ""];
+let currentPlayer = "X";
+let gameRunning = true;
+
+let xScore = 0;
+let oScore = 0;
+
+const winPatterns = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
 ];
 
-let current=0;
-let score=0;
-
-const question=document.getElementById("question");
-const answers=document.getElementById("answers");
-const next=document.getElementById("next");
-const result=document.getElementById("result");
-
-function loadQuestion(){
-
-answers.innerHTML="";
-
-question.innerHTML=quiz[current].question;
-
-quiz[current].options.forEach(option=>{
-
-let btn=document.createElement("button");
-
-btn.innerHTML=option;
-
-btn.classList.add("option");
-
-btn.onclick=function(){
-
-if(option===quiz[current].answer)
-score++;
-
-next.disabled=false;
-
-document.querySelectorAll(".option").forEach(b=>b.disabled=true);
-
-};
-
-answers.appendChild(btn);
-
+cells.forEach(cell => {
+    cell.addEventListener("click", cellClicked);
 });
 
-next.disabled=true;
+restartBtn.addEventListener("click", restartGame);
 
+function cellClicked() {
+
+    const index = this.dataset.index;
+
+    if(board[index] !== "" || !gameRunning)
+        return;
+
+    board[index] = currentPlayer;
+    this.innerHTML = currentPlayer;
+
+    if(currentPlayer === "X"){
+        this.classList.add("x");
+    }else{
+        this.classList.add("o");
+    }
+
+    checkWinner();
 }
 
-loadQuestion();
+function checkWinner(){
 
-next.onclick=function(){
+    let winner = false;
 
-current++;
+    for(let pattern of winPatterns){
 
-if(current<quiz.length){
+        const a = board[pattern[0]];
+        const b = board[pattern[1]];
+        const c = board[pattern[2]];
 
-loadQuestion();
+        if(a === "" || b === "" || c === "")
+            continue;
 
+        if(a === b && b === c){
+            winner = true;
+            break;
+        }
+    }
+
+    if(winner){
+
+        statusText.innerHTML = "🎉 Player " + currentPlayer + " Wins!";
+
+        gameRunning = false;
+
+        if(currentPlayer === "X"){
+            xScore++;
+            xScoreText.innerHTML = xScore;
+        }else{
+            oScore++;
+            oScoreText.innerHTML = oScore;
+        }
+
+        return;
+    }
+
+    if(!board.includes("")){
+
+        statusText.innerHTML = "🤝 Match Draw!";
+        gameRunning = false;
+        return;
+    }
+
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+
+    statusText.innerHTML = "Player " + currentPlayer + "'s Turn";
 }
-else{
 
-question.innerHTML="Quiz Completed";
+function restartGame(){
 
-answers.innerHTML="";
+    board = ["","","","","","","","",""];
 
-next.style.display="none";
+    currentPlayer = "X";
 
-result.innerHTML="Your Score: "+score+" / "+quiz.length;
+    gameRunning = true;
 
-}
+    statusText.innerHTML = "Player X's Turn";
+
+    cells.forEach(cell=>{
+
+        cell.innerHTML = "";
+
+        cell.classList.remove("x");
+        cell.classList.remove("o");
+
+    });
 
 }

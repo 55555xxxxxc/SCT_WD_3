@@ -1,0 +1,36 @@
+body{
+    margin:0;
+    font-family:Arial;
+    background:#4CAF50;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.quiz-box{
+    background:white;
+    width:400px;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+}
+
+button{
+    padding:10px 20px;
+    margin-top:20px;
+    cursor:pointer;
+}
+
+.option{
+    display:block;
+    margin:10px 0;
+    padding:10px;
+    background:#eee;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.option:hover{
+    background:#ddd;
+}
